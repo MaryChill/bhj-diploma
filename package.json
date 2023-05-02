@@ -1,7 +1,7 @@
 {
   "name": "bhj-diploma",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Описание",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -24,5 +24,14 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaryChill/bhj-diploma.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/MaryChill/bhj-diploma/issues"
+  },
+  "homepage": "https://github.com/MaryChill/bhj-diploma#readme"
 }
