@@ -1,4 +1,4 @@
-const { response } = require("express");
+//const { response } = require("express");
 
 /**
  * Класс CreateTransactionForm управляет формой
@@ -21,16 +21,14 @@ class CreateTransactionForm extends AsyncForm {
   renderAccountsList() {
     const data = User.current();
     if (data) {
-      const accountsList = Array.from(document.querySelectorAll('.accounts-select'));
+      const accountsList = this.element.querySelector('select.accounts-select');
+      accountsList.innerHTML = '';
       Account.list(data, (err, response) => {
-        if (response.success === true) {
-          let option;
-          for(let i = 0; i < response.data.length; i++) {
-            option += `<option value="${response.data[i].id}">${response.data[i].name}</option>`;
-            accountsList[0].innerHTML = option;
-            accountsList[1].innerHTML = option;
-          }
-        }
+        if (response.success) {
+          response.data.forEach((value) => {
+            accountsList.insertAdjacentHTML('beforeend', `<option value="${value.id}">${value.name}</option>`)
+          })
+        }  
       })
     }
   }

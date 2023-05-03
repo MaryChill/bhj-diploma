@@ -3,38 +3,33 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
-    const xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    if (options.method == 'GET') {
-        let url = '';
-        if (options.data) {
-            Object.keys(options.data).forEach(key => {
-                url += `${key}=${options.data[key]}&`;
-            })
-        }
-        try {
-            xhr.open('GET', `${options.url}?${url}`);
-            xhr.send();
-        } catch (err) {
-            console.log(err);
-        }
+    let url = options.url;
+    let dataToSend = null;
+
+    if (options.method === 'GET') {
+      if (options.data) {
+         url = options.url + '?';
+         for (let prop in options.data) {
+            url += prop + '=' + options.data[prop] + '&'
+          }
+         url = url.substr(0, url.length - 1);
+      }
+
     } else {
-        const formData = new FormData();
-        if (options.data) {
-            Object.keys(options.data).forEach(key => {
-                formData.append(key, options.data[key]);
-            })
-        }
-        try {
-            xhr.open(options.method, options.url);
-            xhr.send(formData);
-        } catch (err) {
-            console.log(err);
+        dataToSend = new FormData();
+        for (let prop in options.data) {
+          dataToSend.append(prop, options.data[prop]);
         }
     }
-    xhr.onload = () => {
-        if (options.callback !== undefined) {
-            options.callback(xhr.response.error, xhr.response);
-        }
+  
+    try {
+        xhr.open(options.method, url);
+        xhr.send(dataToSend);  
+    } catch (err) {
+        options.callback(err); 
     }
+    
+    xhr.onload = () => { options.callback(null, xhr.response) };
 };

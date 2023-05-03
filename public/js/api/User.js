@@ -1,4 +1,4 @@
-const { response } = require("express");
+//const { response } = require("express");
 
 /**
  * Класс User управляет авторизацией, выходом и
@@ -12,7 +12,7 @@ class User {
    * локальном хранилище.
    * */
   static setCurrent(user) {
-    localStorage.user = JSON.stringify(user);
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   /**
@@ -20,7 +20,7 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-    delete localStorage.user;
+    localStorage.removeItem('user');
   }
 
   /**
@@ -29,7 +29,7 @@ class User {
    * */
   static current() {
     if(localStorage.user) {
-      return JSON.parse(localStorage.user);
+      return JSON.parse(localStorage.getItem('user'));
     }
   }
 
@@ -40,13 +40,18 @@ class User {
   static fetch(callback) {
     createRequest({
       url: this.URL + '/current',
-      data: localStorage.user,
       method: 'GET',
+      responseType: 'json',
+      data: this.current(),
       callback: (err, response) => {
-        if (response && response.success === true) {
-          this.setCurrent(response.user);
+        if (response && response.user) {
+          const user = {
+            name: response.user.name,
+            id: response.user.id
+          }
+          User.setCurrent(user);
         } else {
-          this.unsetCurrent();
+          User.unsetCurrent();
         }
         callback(err, response);
       }
@@ -64,13 +69,14 @@ class User {
       url: this.URL + '/login',
       method: 'POST',
       responseType: 'json',
-      data: {
-        email: data.email,
-        password: data.password
-      },
+      data,
       callback: (err, response) => {
         if (response && response.user) {
-          this.setCurrent(response.user);
+          const user = {
+            name: response.user.name,
+            id: response.user.id
+          }
+          User.setCurrent(user);
         }
         callback(err, response);
       }
@@ -87,10 +93,15 @@ class User {
     createRequest({
       url: this.URL + '/register',
       method: 'POST',
+      responseType: 'json',
       data,
       callback: (err, response) => {
-        if (response && response.success === true) {
-          this.setCurrent(response.user);
+        if (response && response.user) {
+          const user = {
+            name: response.user.name,
+            id: response.user.id
+          }
+          User.setCurrent(user);
           callback(err, response);
         }
       }
@@ -105,9 +116,10 @@ class User {
     createRequest({
       url: this.URL + '/logout',
       method: 'POST',
+      responseType: 'json',
       callback: (err, response) => {
-        if (response && response.success === true) {
-          this.unsetCurrent();
+        if (response) {
+          User.unsetCurrent();
           callback(err, response);
         }
       }

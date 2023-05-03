@@ -1,4 +1,4 @@
-const { response } = require("express");
+//const { response } = require("express");
 
 /**
  * Класс Entity - базовый для взаимодействия с сервером.
@@ -16,11 +16,7 @@ class Entity {
       url: this.URL,
       data,
       method: 'GET',
-      callback: (err, response) => {
-        if (response && response.success === true) {
-          callback(err, response);
-        }
-      }
+      callback
     })
   }
 
@@ -34,11 +30,7 @@ class Entity {
       url: this.URL,
       data,
       method: 'PUT',
-      callback: (err, response) => {
-        if (response && response.success === true) {
-          callback(err, response);
-        }
-      }
+      callback
     })
   }
 
@@ -51,11 +43,7 @@ class Entity {
       url: this.URL,
       data,
       method: 'DELETE',
-      callback: (err, response) => {
-        if (response && response.success === true) {
-          callback(err, response);
-        }
-      }
+      callback
     })
   }
 }

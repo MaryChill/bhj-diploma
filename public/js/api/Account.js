@@ -12,11 +12,7 @@ class Account extends Entity {
     createRequest({
       url: `${this.URL}/${id}`,
       method: 'GET',
-      callback: (err, response) => {
-        if (response && response.success === true) {
-          callback(err, response);
-        }
-      }
+      callback
     })
   }
 }

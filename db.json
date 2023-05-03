@@ -5,6 +5,18 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1"
+    },
+    {
+      "name": "Мария",
+      "email": "oleg@demo.ru",
+      "password": "1234",
+      "id": "560155qc1lh7j3wm8"
+    },
+    {
+      "name": "qwerty",
+      "email": "qwerty@da",
+      "password": "demo",
+      "id": "560155w5ilh7nyh2b"
     }
   ],
   "accounts": [
@@ -22,6 +34,16 @@
       "name": "Бизнес",
       "user_id": "1",
       "id": "3"
+    },
+    {
+      "name": "cash",
+      "user_id": "560155qc1lh7j3wm8",
+      "id": "560155qe0lh7j4jdh"
+    },
+    {
+      "name": "asd",
+      "user_id": "560155qc1lh7j3wm8",
+      "id": "560155vd2lh7mrkxv"
     }
   ],
   "transactions": [
@@ -159,6 +181,15 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
+    },
+    {
+      "id": "560155w2nlh7nt8p2",
+      "type": "income",
+      "name": "qwerty",
+      "sum": 2000,
+      "account_id": "560155qe0lh7j4jdh",
+      "user_id": "560155qc1lh7j3wm8",
+      "created_at": "2023-05-03T12:13:24.421Z"
     }
   ]
 }

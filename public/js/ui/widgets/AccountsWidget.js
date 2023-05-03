@@ -14,13 +14,12 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-    if (element) {
-      this.element = element;
-      this.registerEvents();
-      this.update();
-    } else {
-      console.log('error');
+    if (!element) {
+      throw new Error('error');
     }
+    this.element = element;
+    this.registerEvents();
+    this.update();
   }
 
   /**

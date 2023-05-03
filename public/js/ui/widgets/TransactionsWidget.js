@@ -11,13 +11,12 @@ class TransactionsWidget {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
-    if (element) {
-      this.element = element;
-      this.registerEvents();
-    } else {
-      console.log('error');
+  constructor(element) {
+    if (!element) {
+      throw new Error('error');
     }
+    this.element = element;
+    this.registerEvents();
   }
   /**
    * Регистрирует обработчики нажатия на

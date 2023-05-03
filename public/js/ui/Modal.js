@@ -12,12 +12,12 @@ class Modal {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-    if(element) {
-      this.element = element;
-      this.registerEvents();
-    } else {
-      console.log('error');
-    }
+    if(!element) {
+      throw new Error('error')
+    } 
+    this.element = element;
+    this.registerEvents();
+    
   }
 
   /**
@@ -28,12 +28,9 @@ class Modal {
   registerEvents() {
     const closeButtons = Array.from(document.querySelectorAll('[data-dismiss="modal"]'));
     closeButtons.forEach(elem => {
-      const parent = elem.closest('.modal');
-      if (parent === this.element) {
         elem.addEventListener('click', e => {
           this.onClose(e);
         })
-      }
     })
   }
 

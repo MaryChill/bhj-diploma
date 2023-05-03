@@ -1,4 +1,6 @@
-const { response } = require("express");
+//const { response } = require("express");
+
+//const { response } = require("express");
 
 /**
  * Класс TransactionsPage управляет
@@ -13,12 +15,12 @@ class TransactionsPage {
    * через registerEvents()
    * */
   constructor( element ) {
-    if (element) {
-      this.element = element;
-      this.registerEvents();
-    } else {
-      console.log('error');
+    if (!element) {
+      throw new Error('error');
     }
+    this.element = element;
+    this.registerEvents();
+    this.lastOptions;
   }
 
   /**
@@ -63,7 +65,7 @@ class TransactionsPage {
         if (response && response.success === true) {
           App.updateWidets();
           App.updateForms();
-          this.clear;
+          this.clear();
         }
       })
     }
@@ -94,15 +96,19 @@ class TransactionsPage {
    * в TransactionsPage.renderTransactions()
    * */
   render(options){
-    if (!options) {
-      return console.log('error');
+    if (options) {
+      this.lastOptions = options;
+      Account.get(options.account_id, (err, response) => {
+        if (response.success) {
+          this.renderTransactions(response.data.name);
+        }
+      })
+      Transaction.list(options, (err, response) => {
+        if(response.success) {
+          this.renderTransactions(response.data);
+        }
+      })
     }
-    this.lastOptions = options;
-    Account.get(options.account_id, (err, response) => {
-      if (response && response.success === true) {
-        this.renderTransactions(response.data);
-      }
-    })
   }
 
   /**
