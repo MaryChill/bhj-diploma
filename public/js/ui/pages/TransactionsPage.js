@@ -1,7 +1,3 @@
-//const { response } = require("express");
-
-//const { response } = require("express");
-
 /**
  * Класс TransactionsPage управляет
  * страницей отображения доходов и
@@ -63,7 +59,7 @@ class TransactionsPage {
     if (question) {
       Account.remove({id: this.lastOptions.account_id}, (err, response) => {
         if (response && response.success === true) {
-          App.updateWidets();
+          App.updateWidgets();
           App.updateForms();
           this.clear();
         }
@@ -83,7 +79,6 @@ class TransactionsPage {
       Transaction.remove({id}, (err, response) => {
         if (response && response.success === true) {
           App.update();
-          this.update();
         }
       })
     }
@@ -100,12 +95,12 @@ class TransactionsPage {
       this.lastOptions = options;
       Account.get(options.account_id, (err, response) => {
         if (response.success) {
-          this.renderTransactions(response.data.name);
+          this.renderTitle(response.data.name);
         }
       })
       Transaction.list(options, (err, response) => {
         if(response.success) {
-          this.renderTransactions(response.data);
+          this.renderTitle(response.data);
         }
       })
     }

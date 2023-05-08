@@ -1,5 +1,3 @@
-//const { response } = require("express");
-
 /**
  * Класс User управляет авторизацией, выходом и
  * регистрацией пользователя из приложения
@@ -71,12 +69,8 @@ class User {
       responseType: 'json',
       data,
       callback: (err, response) => {
-        if (response && response.user) {
-          const user = {
-            name: response.user.name,
-            id: response.user.id
-          }
-          User.setCurrent(user);
+        if (response.success) {
+          this.setCurrent(response.user);
         }
         callback(err, response);
       }
@@ -96,14 +90,10 @@ class User {
       responseType: 'json',
       data,
       callback: (err, response) => {
-        if (response && response.user) {
-          const user = {
-            name: response.user.name,
-            id: response.user.id
-          }
-          User.setCurrent(user);
-          callback(err, response);
+        if (response.success) {
+          this.setCurrent(response.user);
         }
+        callback(err, response);
       }
     })
   }

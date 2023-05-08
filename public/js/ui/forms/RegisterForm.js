@@ -1,5 +1,3 @@
-//const { response } = require("express");
-
 /**
  * Класс RegisterForm управляет формой
  * регистрации
