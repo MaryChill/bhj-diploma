@@ -57,7 +57,8 @@ class TransactionsPage {
     }
     const question = confirm('Вы действительно хотите удалить счёт?');
     if (question) {
-      Account.remove({id: this.lastOptions.account_id}, (err, response) => {
+      const id = document.querySelector('li.active').dataset.id;
+      Account.remove({id: id}, (err, response) => {
         if (response && response.success === true) {
           App.updateWidgets();
           App.updateForms();
@@ -76,7 +77,7 @@ class TransactionsPage {
   removeTransaction( id ) {
     const question = confirm('Вы действительно хотите удалить транзакцию?');
     if (question) {
-      Transaction.remove({id}, (err, response) => {
+      Transaction.remove({id: id}, (err, response) => {
         if (response && response.success === true) {
           App.update();
         }
@@ -100,7 +101,7 @@ class TransactionsPage {
       })
       Transaction.list(options, (err, response) => {
         if(response.success) {
-          this.renderTitle(response.data);
+          this.renderTransactions(response.data);
         }
       })
     }
